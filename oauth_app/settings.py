@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import configparser
+
+# Read the config file
+config = configparser.ConfigParser()
+config.read(os.path.expanduser("~") + '/django-config.ini')
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,10 +25,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('django_secret')
+SECRET_KEY = config.get('django', 'django_secret')
+# SECRET_KEY = "_y=i5^lw76nl4l@i9+-zlzwy)7721zo=*o2aopp_*do=y^ru"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'tools.wmflabs.org',
@@ -132,10 +138,10 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-SOCIAL_AUTH_MEDIAWIKI_KEY = os.environ.get('mediawiki_key')
-SOCIAL_AUTH_MEDIAWIKI_SECRET = os.environ.get('mediawiki_secret')
+SOCIAL_AUTH_MEDIAWIKI_KEY = config.get('mediawiki', 'mediawiki_key')
+SOCIAL_AUTH_MEDIAWIKI_SECRET = config.get('mediawiki', 'mediawiki_secret')
 SOCIAL_AUTH_MEDIAWIKI_URL = 'https://meta.wikimedia.org/w/index.php'
-SOCIAL_AUTH_MEDIAWIKI_CALLBACK = os.environ.get('mediawiki_callback')
+SOCIAL_AUTH_MEDIAWIKI_CALLBACK = config.get('mediawiki', 'mediawiki_callback')
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'profile'
