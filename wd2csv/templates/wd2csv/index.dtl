@@ -1,0 +1,13 @@
+{% extends 'homepage/base.dtl' %}
+
+{% block head %}
+    <title>Wikidata to CSV</title>
+{% endblock head %}
+
+{% block content %}
+  	<h1>Wikidata to CSV</h1>
+  	<p>Grab all properties from a list of Qids and transform it to a csv</p>
+
+  	<textarea name=""></textarea>
+  	<input type="submit" />
+{% endblock content %}
