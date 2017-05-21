@@ -32,7 +32,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'tools.wmflabs.org',
-    '127.0.0.1'
+    '127.0.0.1',
+    'localhost'
 ]
 
 INTERNAL_IPS = [
