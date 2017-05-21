@@ -37,3 +37,9 @@ body > .container {
 code {
   font-size: 80%;
 }
+
+/* Forms */
+.control-label .required-field:after {
+  content:"*";
+  color:red;
+}

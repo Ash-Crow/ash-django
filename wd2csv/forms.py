@@ -2,8 +2,11 @@ from django import forms
 
 
 class QueryForm(forms.Form):
-    qids = forms.CharField(widget=forms.Textarea)
-    pids = forms.CharField(widget=forms.Textarea, required=False)
+    qids = forms.CharField(widget=forms.Textarea,
+                           label="Qids (one per line)")
+    pids = forms.CharField(widget=forms.Textarea,
+                           required=False,
+                           label="Pids (optional, one per line)")
     languages = forms.CharField(max_length=200,
                                 initial="en, fr",
                                 required=False)
