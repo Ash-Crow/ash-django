@@ -28,7 +28,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config.get('django', 'django_secret')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config.get('django', 'debug')
+if config.get('django', 'debug') in [1, '1', 'True']:
+    DEBUG = True
+else:
+    DEBUG = False
 
 ALLOWED_HOSTS = [
     'tools.wmflabs.org',
