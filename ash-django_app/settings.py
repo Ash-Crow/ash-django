@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'homepage',
     'user_profile',
     'wd2csv',
+    'django_forms_bootstrap'
 ]
 
 MIDDLEWARE = [

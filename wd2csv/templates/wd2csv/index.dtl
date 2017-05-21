@@ -1,4 +1,5 @@
 {% extends 'homepage/base.dtl' %}
+{% load bootstrap_tags %}
 
 {% block head %}
     <title>Wikidata to CSV</title>
@@ -6,10 +7,11 @@
 
 {% block content %}
   	<h1>Wikidata to CSV</h1>
-  	<p>Grab all properties from a list of Qids and transform it to a csv</p>
+  	<p>Grab properties from a list of Qids and returns it as a csv. Please give a list of
+    Wikidata items, one per line, and optionally a list of properties.</p>
 
     <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Save</button>
+        {{ form|as_bootstrap }}
+        <button type="submit" class="save btn btn-default">Send</button>
     </form>
 {% endblock content %}
