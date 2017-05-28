@@ -65,7 +65,7 @@ def process_query(data):
 
     items = get_entities(data['qids'], 'Q')
     if len(data['languages']):
-        languages = data['languages']
+        languages = "{}".format(', '.join(data['languages']))
     else:
         languages = "en"
 
@@ -100,6 +100,7 @@ WHERE {{
         languages)
 
     results = sparql_query(query)
+    print(query)
     print(results)
 
     headers = ['item', 'label', 'description']
@@ -116,7 +117,7 @@ WHERE {{
         if 'itemDescription' in r:
             description = r['itemDescription']['value']
         else:
-            description = ""
+            description = ''
 
         if item not in rows:
             rows[item] = {
