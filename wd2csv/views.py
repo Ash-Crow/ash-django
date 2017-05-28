@@ -41,19 +41,18 @@ def sparql_query(query):
     return results['results']['bindings']
 
 
-def get_entities(blob, type='Q'):
-    if type == 'Q':
+def get_entities(values, type='Q'):
+    if type == 'Q' or type == 'L':
         prefix = "wd:"
     elif type == 'P':
         prefix = 'wdt:'
     else:
-        raise ValueError('Entity type must be either Q or P')
+        raise ValueError('Entity type must be either L, Q or P')
 
     entities = []
-    lines = blob.split('\r\n')
-    for l in lines:
-        if l[0].upper() == type and l[1:].isdigit():
-            entities.append(prefix + l)
+    for v in values:
+        if v[0].upper() == type and v[1:].isdigit():
+            entities.append(prefix + v)
         else:
             error_text = 'Please enter one {}id per line'.format(type)
             raise ValueError(error_text)
@@ -79,8 +78,9 @@ def process_query(data):
     else:
         properties = ''
 
+    # Sample version of the query: http://tinyurl.com/y9oucmuw
     query = """
-SELECT ?item ?itemLabel ?prop ?propLabel ?value ?valueLabel
+SELECT ?item ?itemLabel ?itemDescription ?prop ?propLabel ?value ?valueLabel
 WHERE {{
   ?item ?direct ?value .
   ?prop wikibase:directClaim ?direct .
@@ -99,19 +99,23 @@ WHERE {{
         properties,
         languages)
 
-#    query = "SELECT ?item WHERE {{ ?item wdt:P31 wd:Q5 }} LIMIT 5"
-
     results = sparql_query(query)
     print(results)
 
-    headers = ['item']
+    headers = ['item', 'label', 'description']
     rows = {}
 
     for r in results:
         item = r['item']['value'].split('/')[-1]
+        label = r['itemLabel']['value']
+        description = r['itemDescription']['value']
 
         if item not in rows:
-            rows[item] = {'item': item}
+            rows[item] = {
+                'item': item,
+                'label': label,
+                'description': description
+            }
 
         propId = r['prop']['value'].split('/')[-1]
         propLabel = r['propLabel']['value']
