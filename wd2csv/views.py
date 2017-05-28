@@ -107,8 +107,16 @@ WHERE {{
 
     for r in results:
         item = r['item']['value'].split('/')[-1]
-        label = r['itemLabel']['value']
-        description = r['itemDescription']['value']
+
+        if 'itemLabel' in r:
+            label = r['itemLabel']['value']
+        else:
+            label = ''
+
+        if 'itemDescription' in r:
+            description = r['itemDescription']['value']
+        else:
+            description = ""
 
         if item not in rows:
             rows[item] = {
