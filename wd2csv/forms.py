@@ -16,7 +16,7 @@ class MultiEntityField(forms.Field):
         super(MultiEntityField, self).validate(value)
         for entity in value:
             if entity[0] not in ('L', 'P', 'Q') or not entity[1:].isdigit():
-                raise forms.ValidationError("Please enter only valid IDs")
+                raise forms.ValidationError("This entity ID is invalid: {}".format(entity))
 
 
 class MultiLanguagesField(forms.CharField):
